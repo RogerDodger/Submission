@@ -40,7 +40,7 @@ class PlainStore {
 		$rows = preg_split("#\\n#", $store, 0, PREG_SPLIT_NO_EMPTY);
 		$data = array();
 		foreach($rows as $row)
-			$data[] = preg_split("#\\t#", $row, 0, PREG_SPLIT_NO_EMPTY);
+			$data[] = preg_split("#\\t#", $row);
 		return $data;
 	}
 	
