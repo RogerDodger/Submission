@@ -2,7 +2,7 @@
 	include 'lib/config.php';
 	include 'lib/PlainStore.php';
 	
-	//Retrieve password cookie if exists, or set one if it doesn't.
+	//Set password cookie if it doesn't exist.
 	$alphanum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	if(!isset($_COOKIE['password'])) {
 		$password = '';

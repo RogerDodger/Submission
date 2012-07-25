@@ -1,20 +1,20 @@
 <?php
 
-/**
- * Class for storing and retrieving data as a single, tab-delimited plaintext
- * file.
+/** 
+ * Class for storing and retrieving data as a single plaintext file, separated
+ * by tabs and newlines. 
  *
  * @author Cameron Thornton <cthor@cpan.org>
+ * @copyright Copyright (c) 2012, Cameron Thornton
  */
 class PlainStore {
 	private $store;
 	
-	/*
-	 * $store = new PlainStore(str $file);
+	/**
+	 * Create a new store object from given file
 	 * 
-	 * creates a new store with the filename $file
-	 *
-	 * creates empty file $file if $file does not exist
+	 * @param str $file
+	 * 
 	 */
 	public function __construct($file) {
 		if(!file_exists($file)) {
@@ -29,11 +29,11 @@ class PlainStore {
 		$this->store = $file;
 	}
 	
-	/*
-	 * @method read()
+	/** 
 	 * Read the store
 	 * 
-	 * @return two-dimensional array of store data
+	 * @return mixed two-dimensional array containing the store's data
+	 * 
 	 */
 	public function read() {
 		$store = file_get_contents($this->store);
@@ -44,12 +44,12 @@ class PlainStore {
 		return $data;
 	}
 	
-	/*
-	 * @method write()
+	/**
 	 * Write a two-dimensional array to the store as tab-separated data
 	 * 
-	 * @args two-dimensional array, elements containing no newlines nor tabs
-	 * @return true if success; throws exception if failure;
+	 * @param mixed $twoDimensionalArray containing no tabs nor newlines
+	 * @return bool $success
+	 * 
 	 */
 	public function write($data) {
 		foreach($data as $row)
@@ -62,10 +62,13 @@ class PlainStore {
 		return true;
 	}
 	
-	/*
-	 * PlainStore::column($twoDimensionalArray, $index = 0);
+	/**
+	 * Select a column from a two-dimensional array
 	 * 
-	 * @returns the $index'th column in a 2D array
+	 * @param mixed $twoDimensionalArray
+	 * @param int $index The index of the desired column; defaults to 0
+	 * 
+	 * @return Array of the chosen column
 	 * 
 	 */
 	public static function column($twoDimensionalArray, $index = 0) {
