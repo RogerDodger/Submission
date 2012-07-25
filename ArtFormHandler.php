@@ -14,7 +14,13 @@
 		if(file_exists(ART_STORE_DIR)) {
 			throw new Exception('<'.ART_STORE_DIR.'> is a file');
 		} else {
-			mkdir(ART_STORE_DIR);
+			if(!is_writable(dirname(ART_STORE_DIR))) {
+				throw new Exception('<'.dirname(ART_STORE_DIR).'> is not writable');
+			} else {
+				mkdir(ART_STORE_DIR);
+				file_put_contents(ART_STORE_DIR.DIRECTORY_SEPARATOR.'.htaccess',
+						"deny from all\n");
+			}
 		}
 	}
 	
