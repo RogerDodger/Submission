@@ -1,0 +1,29 @@
+/* Style for error page */
+
+a, a:visited {
+	color: blue;
+	text-decoration: none;
+}
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #dfd;
+}
+ul {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background: greenyellow;
+}
+h1 {
+	font-size: 3em;
+	background: greenyellow;
+	padding: 5px;
+}
+li {
+	font-size: 1.4em;
+}
+p {
+	font-size: 1em;
+	padding: 5px;
+	background: greenyellow;
+}
