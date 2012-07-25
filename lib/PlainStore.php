@@ -17,10 +17,15 @@ class PlainStore {
 	 * creates empty file $file if $file does not exist
 	 */
 	public function __construct($file) {
-		if(!is_writable($file))
-			throw new Exception("<$file> is not writable");
-		if(!file_exists($file))
-			file_put_contents($file, '');
+		if(!file_exists($file)) {
+			if(!is_writable(dirname($file))) 
+				throw new Exception("<".dirname($file)."> is not writable");
+			else file_put_contents($file, '');
+		} else {
+			if(!is_writable($file)) {
+				throw new Exception("<$file> is not writable");
+			}
+		}
 		$this->store = $file;
 	}
 	
