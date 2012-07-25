@@ -11,7 +11,7 @@ class PlainStore {
 	private $store;
 	
 	/**
-	 * Create a new store object from given file
+	 * Load a new store at the given filename
 	 * 
 	 * @param str $file
 	 * 
@@ -48,13 +48,13 @@ class PlainStore {
 	 * Write a two-dimensional array to the store as tab-separated data
 	 * 
 	 * @param mixed $twoDimensionalArray containing no tabs nor newlines
-	 * @return bool $success
+	 * @return bool false if newlines or tabs in data, else true
 	 * 
 	 */
 	public function write($data) {
 		foreach($data as $row)
 			if(preg_match("#[\\n\\r\\t]#", join("", $row)))
-				throw new Exception("Unpermitted control character(s) in data");
+				return false;
 		$rows = array_map(function($row) {
 			return join("\t", $row)."\n";
 		}, $data);
@@ -68,7 +68,7 @@ class PlainStore {
 	 * @param mixed $twoDimensionalArray
 	 * @param int $index The index of the desired column; defaults to 0
 	 * 
-	 * @return Array of the chosen column
+	 * @return mixed array of the chosen column
 	 * 
 	 */
 	public static function column($twoDimensionalArray, $index = 0) {
