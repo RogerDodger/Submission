@@ -78,7 +78,7 @@
 		<p>Fields with <span class="required">*</span> are required.</p>
 		<table>
 			<tr>
-				<td>Title<span class="required">*<span></td>
+				<td>Title<span class="required">*</span></td>
 				<td>
 					<input name="title" type="text" maxlength="<?php echo $MAXLEN['title'] ?>"/>
 					<input type="submit" value="Submit"/>
