@@ -1,5 +1,3 @@
 <Files ~ "GalleryInfo|StoryInfo">
-    Order deny,allow
-    Deny from all
-    Satisfy all
+    deny from all
 </Files>
