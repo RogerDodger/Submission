@@ -9,6 +9,14 @@
 	
 	$store = new PlainStore(ART_INFO_FILE);
 	$info = $store->read();
+
+	if(!is_dir(ART_STORE_DIR)) {
+		if(file_exists(ART_STORE_DIR)) {
+			throw new Exception('<'.ART_STORE_DIR.'> is a file');
+		} else {
+			mkdir(ART_STORE_DIR);
+		}
+	}
 	
 	if(isset($_POST['submit'])) {
 		if(ART_SUBS_ALLOWED) {

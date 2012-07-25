@@ -24,9 +24,6 @@
 <?php
 	$store = new PlainStore(ART_INFO_FILE);
 	
-	if(!is_dir(ART_STORE_DIR) || !is_writable(ART_STORE_DIR))
-		trigger_error('"'.ART_STORE_DIR.'" is not writable or is not a directory', E_USER_ERROR);
-	
 	$info = $store->read();
 	/* info[] = array(
 	 *    [0] => handle,
