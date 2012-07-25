@@ -30,7 +30,7 @@ class PlainStore {
 	}
 	
 	/*
-	 * @method read([int $column = -1])
+	 * @method read()
 	 * Read the store
 	 * 
 	 * @return two-dimensional array of store data
