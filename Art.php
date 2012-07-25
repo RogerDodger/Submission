@@ -65,6 +65,7 @@
 
 <ul>
 	<li>Submitted works must be your own.</li>
+	<li>Submissions must have a title.</li>
 	<li>Images must be in either <tt>.png</tt>, <tt>.jpg</tt>, or <tt>.gif</tt> format.</li>
 	<li>Images must be smaller than 4MB.</li>
 </ul>
