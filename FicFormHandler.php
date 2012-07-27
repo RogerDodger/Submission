@@ -108,7 +108,7 @@
 				/*
 				 * Notify given e-mail address of successful submission
 				 */
-				mail($_POST['email'], MAIL_SUBJECT, MAIL_MESSAGE, MAIL_HEADERS, MAIL_PARAMS);
+				mail($_POST['email'], MAIL_SUBJECT, MAIL_MESSAGE, MAIL_HEADERS);
 			}
 		} else { 
 			$error[] = "<strong>Submissions are closed.</strong>"; 
