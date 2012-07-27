@@ -7,12 +7,12 @@
 	
 	define('HASH_TYPE', 'md5');
 	
-	define('ART_SUBS_OPEN',  '2011-07-30 00:00:00');
+	define('ART_SUBS_OPEN',  '2012-07-30 00:00:00');
 	define('ART_SUBS_CLOSE', '2012-08-03 00:00:00');
 	define('ART_INFO_FILE',  'GalleryInfo');
 	define('ART_STORE_DIR',  'images');
 
-	define('FIC_SUBS_OPEN',  '2011-08-03 04:00:00');
+	define('FIC_SUBS_OPEN',  '2012-08-03 04:00:00');
 	define('FIC_SUBS_CLOSE', '2012-08-06 04:00:00');
 	define('FIC_INFO_FILE',  'StoryInfo');
 	define('FIC_STORE_DIR',  'stories');
