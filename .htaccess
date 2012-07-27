@@ -1,3 +1,3 @@
-<Files ~ "GalleryInfo|StoryInfo">
+<Files ~ "ImageInfo|StoryInfo">
     deny from all
 </Files>
