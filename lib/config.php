@@ -45,12 +45,18 @@
 	
 	$Mime = new finfo(FILEINFO_MIME);
 	
-	$ServerAdmin = 'RogerDodger <noreply@rogerdodger.doveit.com.au>';
+	define('ADMIN_NAME', '');
+	
+	$from = $_SERVER['SERVER_ADMIN'];
+	if(ADMIN_NAME != '')
+		$from = ADMIN_NAME." <$from>";
+	
+	define('MAIL_SUBJECT', "Write-off Submission Received");
 	define('MAIL_MESSAGE',
 		"This e-mail is informing you that your submission has been received.\n\n".
 		"If you have received this e-mail, then all is well.\n\n".
 		"If you haven't received this e-mail, please delete this e-mail.\n");
 	define('MAIL_HEADERS',
-		"From: $ServerAdmin" . "\r\n" .
+		"From: $from" . "\r\n" .
 		"X-Mailer: PHP/" . phpversion());
 ?>

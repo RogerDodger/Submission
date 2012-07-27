@@ -100,7 +100,7 @@
 				$entry = array($handle);
 				foreach($fields as $field)
 					if(isset($_POST[$field]))
-						$info[] = htmlentities($_POST[$field]);
+						$entry = htmlentities($_POST[$field]);
 				
 				move_uploaded_file($_FILES['story']['tmp_name'], FIC_STORE_DIR.DIRECTORY_SEPARATOR.$handle);
 				$store->write($entry);
@@ -108,8 +108,7 @@
 				/*
 				 * Notify given e-mail address of successful submission
 				 */
-				mail($_POST['email'], '/fic/ Write-off Submission Received', 
-					MAIL_MESSAGE, MAIL_HEADERS, MAIL_PARAMS);
+				mail($_POST['email'], MAIL_SUBJECT, MAIL_MESSAGE, MAIL_HEADERS, MAIL_PARAMS);
 			}
 		} else { 
 			$error[] = "<strong>Submissions are closed.</strong>"; 
