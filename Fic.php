@@ -57,7 +57,7 @@
 	</li>
 	<li>Stories must be at least <?php echo MIN_WORD_COUNT ?> words.</li>
 	<li>
-		You must provide your e-mail address so that you can receive further
+		You must provide your email address so that you can receive further
 		information about the preliminary-round judging.
 	</li>
 </ul>
@@ -67,7 +67,7 @@
 <form action="<?php echo ROOT_DIR."/FicFormHandler.php" ?>" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="submit" value="true"/>
 	<fieldset>
-		<legend>Submit Art</legend>
+		<legend>Submit Story</legend>
 		<p>Fields with <span class="required">*</span> are required.</p>
 		<table>
 			<tr>
@@ -90,12 +90,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td>E-mail<span class="required">*</span></td>
+				<td>Email<span class="required">*</span></td>
 				<td><input name="email" type="text" maxlength="<?php echo $MAXLEN['email'] ?>"/></td>
 			</tr>
 			<tr>
 				<td>Author</td>
-				<td><input name="artist" type="text" maxlength="<?php echo $MAXLEN['artist'] ?>"/></td>
+				<td><input name="author" type="text" maxlength="<?php echo $MAXLEN['artist'] ?>"/></td>
 			</tr>
 			<tr>
 				<td>Story<span class="required">*</span></td>
@@ -120,13 +120,14 @@
 	to think about this.
 </p>
 <p>
-	You will receive an e-mail at the given address on successful submission to
+	You will receive an email at the given address on successful submission to
 	let you know if you entered the right address. This is done because if you 
 	typo’d your email, you wouldn’t be able to participate in the preliminary
-	voting and your submission would be disqualified (and that’d kinda suck).
+	voting, and so your submission would end up disqualified (and that’d kinda 
+	suck).
 </p>	
 <p>
-	If you don’t receive a confirmation e-mail, check your spam box, etc. to 
+	If you don’t receive a confirmation email, check your spam box, etc. to 
 	check if it actually is there; then, if you still can’t find it, delete and 
 	resubmit your story—making sure to enter the the right address.
 </p>

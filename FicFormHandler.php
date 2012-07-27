@@ -95,7 +95,7 @@
 				
 				
 				$fields = array('title','password','art_title',
-				                'email','wordcount','artist');
+				                'email','wordcount','author');
 				
 				$entry = array($handle);
 				foreach($fields as $field)
@@ -108,7 +108,28 @@
 				/*
 				 * Notify given e-mail address of successful submission
 				 */
-				mail($_POST['email'], MAIL_SUBJECT, MAIL_MESSAGE, MAIL_HEADERS);
+				$subject = 'Write-off Submission Received';
+				$from = $_SERVER['SERVER_ADMIN'];
+				if(ADMIN_NAME != '')
+					$from = ADMIN_NAME." <$from>";
+				$headers = "MIME-Version: 1.0" . "\r\n" .
+				           "Content-type: text/html; charset=utf-8" . "\r\n" .
+				           "From: $from" . "\r\n" .
+				           "X-Mailer: PHP/" . phpversion();
+				$body = file_get_contents('lib/mail_template.html');
+				$body = str_replace('%subject%', $subject, $body);
+				
+				$details = '';
+				foreach(array('title','author','email','wordcount','art_title') as $field) {
+					if(isset($_POST[$field]) && $_POST[$field] != '') 
+					     $value = htmlentities($_POST[$field]);
+					else $value = 'Anonymous';
+					$item = ucfirst(str_replace('_', ' ', $field));
+					$details .= "<li><strong>$item</strong>: $value</li>";
+				}
+				$body = str_replace('%details%', "<ul>$details</ul>", $body);
+				
+				mail($_POST['email'], $subject, $body, $headers);
 			}
 		} else { 
 			$error[] = "<strong>Submissions are closed.</strong>"; 
