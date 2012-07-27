@@ -100,7 +100,7 @@
 				$entry = array($handle);
 				foreach($fields as $field)
 					if(isset($_POST[$field]))
-						$entry = htmlentities($_POST[$field]);
+						$entry[] = htmlentities($_POST[$field]);
 				
 				move_uploaded_file($_FILES['story']['tmp_name'], FIC_STORE_DIR.DIRECTORY_SEPARATOR.$handle);
 				$store->write($entry);
