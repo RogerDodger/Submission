@@ -1,27 +1,8 @@
 <?php 
 	include 'lib/config.php';
 	include 'lib/PlainStore.php';
-	
-	//Set password cookie if it doesn't exist.
-	$alphanum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	if(!isset($_COOKIE['password'])) {
-		$password = '';
-		for($i = 0; $i < 10; $i++) $password .= $alphanum[rand(0, strlen($alphanum)-1)];
-		setcookie('password', $password, time()+60*60*24*365);
-	}
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-<title>Submission – /art/</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<script src="js/password_fill.js" type="text/javascript"></script>
-
-<?php
+	$title = '/art/';
+	include 'lib/header.php';
 	$store = new PlainStore(ART_INFO_FILE);
 	
 	$info = $store->read();
@@ -38,12 +19,6 @@
 	$close = new DateTime(ART_SUBS_CLOSE);
 	
 ?>
-
-</head>
-
-<body>
-
-<div id="main">
 
 <h1>/art/-/fic/ Event</h1>
 
@@ -101,7 +76,7 @@
 				<td>Password<span class="required">*</span></td>
 				<td>
 					<input name="password" type="password" maxlength="<?php echo 
-			$MAXLEN['password'] ?>"/>
+			$MAXLEN['password'] ?>" value="<?php echo $password ?>"/>
 					(for submission deletion)
 				</td>
 			</tr>
@@ -153,15 +128,9 @@
 	<p>
 		Password:
 		<input name="password" type="password" maxlength="<?php echo 
-			$MAXLEN['password'] ?>"/>
+			$MAXLEN['password'] ?>" value="<?php echo $password ?>"/>
 		<input type="submit" value="Delete selected items"/>
 	</p>
 </form>
 
 <?php include 'lib/footer.php' ?>
-
-</div>
-
-</body>
-
-</html>

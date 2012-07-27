@@ -43,7 +43,7 @@
 				} else {
 					$type = preg_replace("#;.+#", "", $Mime->file($_FILES['image']['tmp_name']));
 					if(!isset($ART_TYPES[$type]))
-						$error[] = "<strong>Image</strong> type not permitted.";
+						$error[] = "<strong>Filetype</strong> '$type' not permitted.";
 					else $ext = $ART_TYPES[$type];
 				}
 			} else { $error[] = "<strong>Image</strong> is a required field."; }
@@ -56,12 +56,23 @@
 					$error[] = "Text fields may not have newlines nor tabs.";
 			}
 			
-			if(isset($_POST['website']) && $_POST['website'] != '' && !filter_var($_POST['website'], FILTER_VALIDATE_URL))
-				$error[] = "<strong>Website</strong> is not a valid URL.";
+			if(isset($_POST['website']) && $_POST['website'] != '' && 
+				!filter_var($_POST['website'], FILTER_VALIDATE_URL))
+					$error[] = "<strong>Website</strong> '".$_POST['website'].
+					"' is not a valid URL.";
+
+			if(isset($_POST['title']) && $_POST['title'] != '' && 
+				in_array($_POST['title'], $store->column(1), true))
+					$error[] = "<strong>Title</strong> '".$_POST['title'].
+					"' already exists.";
+
 			
-			if($error == array()) {	//Data is valid!
+			/*
+			 * Valid data? Process submission.
+			 */
+			if($error == array()) {
 				//Create new unique handle
-				$primary_keys = PlainStore::column($info);
+				$primary_keys = $store->column(0);
 				$alphanum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 				do {
 					$handle = '';
@@ -73,13 +84,13 @@
 				setcookie('password',$_POST['password'],time()+60*60*24*365);
 				$_POST['password'] = hash(HASH_TYPE, $_POST['password']);
 				
-				$info[] = array($handle);
+				$entry = array($handle);
 				foreach(array('title','password','artist','website') as $field)
 					if(isset($_POST[$field])) 
-						$info[count($info)-1][] = htmlentities($_POST[$field]);
+						$entry[] = htmlentities($_POST[$field]);
 				
 				move_uploaded_file($_FILES['image']['tmp_name'], ART_STORE_DIR.DIRECTORY_SEPARATOR.$handle);
-				$store->write($info);
+				$store->write($entry);
 			}
 		} else { 
 			$error[] = "<strong>Submissions are closed.</strong>"; 
@@ -88,13 +99,12 @@
 	
 	if(isset($_POST['password']) && isset($_POST['delete'])) {
 		foreach($_POST['delete'] as $handle) {
-			$index = array_search($handle, PlainStore::column($info), true);
+			$index = array_search($handle, $store->column(0), true);
 			if($index === false) {
 				$error[] = "<strong>$handle</strong> is an invlid handle.";
 			} elseif($info[$index][2] == hash(HASH_TYPE, $_POST['password'])) {
 				unlink(ART_STORE_DIR.DIRECTORY_SEPARATOR.$info[$index][0]);
-				unset($info[$index]);
-				$store->write($info);
+				$info = $store->delete($index);
 			} else {
 				$error[] = "Passwords do not match.";
 			}

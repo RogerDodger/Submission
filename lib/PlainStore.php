@@ -14,7 +14,6 @@ class PlainStore {
 	 * Load a new store at the given filename
 	 * 
 	 * @param str $file
-	 * 
 	 */
 	public function __construct($file) {
 		if(!file_exists($file)) {
@@ -33,11 +32,11 @@ class PlainStore {
 	 * Read the store
 	 * 
 	 * @return mixed two-dimensional array containing the store's data
-	 * 
 	 */
 	public function read() {
 		$store = file_get_contents($this->store);
 		$rows = preg_split("#\\n#", $store, 0, PREG_SPLIT_NO_EMPTY);
+		
 		$data = array();
 		foreach($rows as $row)
 			$data[] = preg_split("#\\t#", $row);
@@ -45,39 +44,59 @@ class PlainStore {
 	}
 	
 	/**
-	 * Write a two-dimensional array to the store as tab-separated data
+	 * Write a row to the store as tab-separated data
 	 * 
-	 * @param mixed $twoDimensionalArray containing no tabs nor newlines
-	 * @return bool false if newlines or tabs in data, else true
+	 * @param mixed $entry row to be entered, containing no tabs nor newlines
 	 * 
+	 * @return bool true on success
 	 */
-	public function write($data) {
-		foreach($data as $row)
-			if(preg_match("#[\\n\\r\\t]#", join("", $row)))
-				return false;
-		$rows = array_map(function($row) {
-			return join("\t", $row)."\n";
-		}, $data);
-		file_put_contents($this->store, $rows);
+	public function write($entry) {
+		if(preg_match("#[\\n\\r\\t]#", join("", $entry)))
+			return false;
+		file_put_contents($this->store, join("\t", $entry)."\n", FILE_APPEND);
 		return true;
 	}
 	
 	/**
-	 * Select a column from a two-dimensional array
+	 * Delete a row from the store
 	 * 
-	 * @param mixed $twoDimensionalArray
-	 * @param int $index The index of the desired column; defaults to 0
+	 * @param int $index The index of the row
+	 * 
+	 * @return mixed two-dimensional array of store data after deletion
+	 */
+	public function delete($index) {
+		$info = $this->read();
+		
+		$new = $dat = array();
+		foreach($info as $key => $row) {
+			if($key != $index) {
+				$new[] = $row;
+				$dat[] = join("\t", $row)."\n";
+			}
+		}
+		
+		//Write the new data
+		file_put_contents($this->store, $dat);
+		
+		return $new;
+	}
+	
+	/**
+	 * Select a column from the store
+	 * 
+	 * @param int $index The index of the desired column
 	 * 
 	 * @return mixed array of the chosen column
-	 * 
 	 */
-	public static function column($twoDimensionalArray, $index = 0) {
+	public function column($index) {
+		$info = $this->read();
 		$column = array();
-		foreach($twoDimensionalArray as $row)
+		foreach($info as $row)
 			if(isset($row[$index]))
 				$column[] = $row[$index];
 		return $column;
 	}
+	
 }
 
 ?>
